@@ -42,8 +42,8 @@ const modals = () => {
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
-                 windows.forEach(item => {
-                item.style.display = "none";
+                windows.forEach(item => {
+                    item.style.display = "none";
                  });
                 
                 modal.style.display = "none";
@@ -68,7 +68,6 @@ const modals = () => {
                 document.body.style.overflow = "hidden";
                 let scroll = calcScroll();
                 document.body.style.marginRight = `${scroll}px`;
-
             }
         }, time);
     }
@@ -103,7 +102,7 @@ const modals = () => {
     bindModal('.fixed-gift', '.popup-gift', '.popup-gift .popup-close', true);
     openByScroll('.fixed-gift');
 
-    // showModalByTime('.popup-consultation', 60000);
+    showModalByTime('.popup-consultation', 60000);
 
 };
 
