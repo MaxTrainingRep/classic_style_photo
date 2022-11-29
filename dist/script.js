@@ -2,6 +2,113 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const accordion = triggersSelector => {
+  const btns = document.querySelectorAll(triggersSelector);
+  btns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      this.classList.toggle('active-style');
+      this.nextElementSibling.classList.toggle('active-content');
+
+      if (this.classList.contains('active-style')) {
+        this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + "px";
+      } else {
+        this.nextElementSibling.style.maxHeight = '0px';
+      }
+    });
+  }); /////commented - accordion works with css styles/////
+  // blocks = document.querySelectorAll(itemsSelector);
+  // blocks.forEach(block => {
+  //     block.classList.add('animated', 'fadeInDown'); 
+  // });
+  // btns.forEach(btn => {
+  //     btn.addEventListener('click', function () {
+  //         if (!this.classList.contains('active')) {
+  //             btns.forEach(btn => {
+  //                 btn.classList.remove('active', 'active-style'); 
+  //             });
+  //             this.classList.add('active', 'active-style');
+  //         }
+  //     });
+  // });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordion);
+
+/***/ }),
+
+/***/ "./src/js/modules/burger.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/burger.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const burger = (menuSelector, burgerSelector) => {
+  const menuElem = document.querySelector(menuSelector),
+        burgerElem = document.querySelector(burgerSelector);
+  menuElem.style.display = "none";
+  burgerElem.addEventListener('click', () => {
+    if (menuElem.style.display == "none" && window.screen.availWidth < 993) {
+      menuElem.style.display = "block";
+    } else {
+      menuElem.style.display = "none";
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.screen.availWidth > 992) {
+      menuElem.style.display = "none";
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (burger);
+
+/***/ }),
+
+/***/ "./src/js/modules/calc.js":
+/*!********************************!*\
+  !*** ./src/js/modules/calc.js ***!
+  \********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const calc = (size, material, options, promocode, result) => {
+  const sizeBlock = document.querySelector(size),
+        materialBlock = document.querySelector(material),
+        optionsBlock = document.querySelector(options),
+        promocodeBlock = document.querySelector(promocode),
+        resultBlock = document.querySelector(result);
+  let sum = 0;
+
+  const calcFunc = () => {
+    sum = Math.round(+sizeBlock.value * +materialBlock.value + +optionsBlock.value);
+
+    if (sizeBlock.value == '' || materialBlock.value == '') {
+      resultBlock.textContent = "Пожалуйста, выберите размер и материал картины";
+    } else if (promocodeBlock.value === 'IWANTPOPART') {
+      resultBlock.textContent = Math.round(sum * 0.7);
+    } else {
+      resultBlock.textContent = sum;
+    }
+  };
+
+  sizeBlock.addEventListener('change', calcFunc);
+  materialBlock.addEventListener('change', calcFunc);
+  optionsBlock.addEventListener('change', calcFunc);
+  promocodeBlock.addEventListener('input', calcFunc);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calc);
+
+/***/ }),
+
 /***/ "./src/js/modules/checkTextInputs.js":
 /*!*******************************************!*\
   !*** ./src/js/modules/checkTextInputs.js ***!
@@ -24,6 +131,85 @@ const checkTextInputs = selector => {
 
 /***/ }),
 
+/***/ "./src/js/modules/filter.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/filter.js ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const filter = () => {
+  const menu = document.querySelector('.portfolio-menu'),
+        items = menu.querySelectorAll('li'),
+        btnAll = menu.querySelector('.all'),
+        btnLovers = menu.querySelector('.lovers'),
+        btnChef = menu.querySelector('.chef'),
+        btnGirl = menu.querySelector('.girl'),
+        btnGuy = menu.querySelector('.guy'),
+        btnGrandmother = menu.querySelector('.grandmother'),
+        btnGranddad = menu.querySelector('.granddad'),
+        wrapper = document.querySelector('.portfolio-wrapper'),
+        markAll = wrapper.querySelectorAll('.all'),
+        markGirl = wrapper.querySelectorAll('.girl'),
+        markLovers = wrapper.querySelectorAll('.lovers'),
+        markChef = wrapper.querySelectorAll('.chef'),
+        markGuy = wrapper.querySelectorAll('.guy'),
+        no = document.querySelector('.portfolio-no');
+
+  const typeFilter = markType => {
+    markAll.forEach(mark => {
+      mark.style.display = "none";
+      mark.classList.remove('animated', 'fadeIn');
+    });
+    no.style.display = "none";
+    no.classList.remove('animated', 'fadeIn');
+
+    if (markType) {
+      markType.forEach(mark => {
+        mark.style.display = "block";
+        mark.classList.add('animated', 'fadeIn');
+      });
+    } else {
+      no.style.display = "block";
+      no.classList.add('animated', 'fadeIn');
+    }
+  };
+
+  btnAll.addEventListener('click', () => {
+    typeFilter(markAll);
+  });
+  btnLovers.addEventListener('click', () => {
+    typeFilter(markLovers);
+  });
+  btnChef.addEventListener('click', () => {
+    typeFilter(markChef);
+  });
+  btnGuy.addEventListener('click', () => {
+    typeFilter(markGuy);
+  });
+  btnGirl.addEventListener('click', () => {
+    typeFilter(markGirl);
+  });
+  btnGranddad.addEventListener('click', () => {
+    typeFilter();
+  });
+  btnGrandmother.addEventListener('click', () => {
+    typeFilter();
+  });
+  menu.addEventListener('click', e => {
+    let target = e.target;
+
+    if (target && target.tagName == 'LI') {
+      items.forEach(btn => btn.classList.remove('active'));
+      target.classList.add('active');
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (filter);
+
+/***/ }),
+
 /***/ "./src/js/modules/forms.js":
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
@@ -31,7 +217,10 @@ const checkTextInputs = selector => {
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
 // import checkNumInputs from "./checkNumInputs";
+
+
 const forms = () => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
@@ -48,14 +237,6 @@ const forms = () => {
   const path = {
     designer: 'assets/server.php',
     question: 'assets/question.php'
-  };
-
-  const postData = async (url, data) => {
-    let res = await fetch(url, {
-      method: 'POST',
-      body: data
-    });
-    return await res.text();
   };
 
   const clearInputs = () => {
@@ -98,7 +279,7 @@ const forms = () => {
       let api;
       item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question;
       console.log(api);
-      postData(api, formData).then(res => {
+      (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.postData)(api, formData).then(res => {
         console.log(res);
         statusImg.setAttribute('src', message.ok);
         textMessage.textContent = message.success;
@@ -288,6 +469,195 @@ const modals = () => {
 
 /***/ }),
 
+/***/ "./src/js/modules/pictureSize.js":
+/*!***************************************!*\
+  !*** ./src/js/modules/pictureSize.js ***!
+  \***************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const pictureSize = imgSelector => {
+  const blocks = document.querySelectorAll(imgSelector);
+
+  function showImg(block) {
+    const img = block.querySelector('img');
+    img.src = img.src.slice(0, -4) + '-1.png';
+    block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+      p.style.display = 'none';
+    });
+  }
+
+  function hideImg(block) {
+    const img = block.querySelector('img');
+    img.src = img.src.slice(0, -6) + '.png';
+    block.querySelectorAll('p:not(.sizes-hit)').forEach(p => {
+      p.style.display = 'block';
+    });
+  }
+
+  blocks.forEach(block => {
+    block.addEventListener('mouseover', () => {
+      showImg(block);
+    });
+    block.addEventListener('mouseout', () => {
+      hideImg(block);
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (pictureSize);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrolling.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/scrolling.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+const scrolling = upSelector => {
+  const upElem = document.querySelector(upSelector);
+  window.addEventListener('scroll', () => {
+    if (document.documentElement.scrollTop > 1650) {
+      upElem.classList.add('animated', 'fadeIn');
+      upElem.classList.remove('fadeOut');
+    } else {
+      upElem.classList.add('fadeOut');
+      upElem.classList.remove('fadeIn');
+    }
+  }); // Raf scrolling
+
+  let links = document.querySelectorAll('[href^="#"]'),
+      speed = 0.4;
+  links.forEach(link => {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+      let withTop = document.documentElement.scrollTop,
+          hash = this.hash,
+          toBlock = document.querySelector(hash).getBoundingClientRect().top,
+          start = null;
+      requestAnimationFrame(step);
+
+      function step(time) {
+        if (start === null) {
+          start = time;
+        }
+
+        let progress = time - start,
+            r = toBlock < 0 ? Math.max(withTop - progress / speed, withTop + toBlock) : Math.min(withTop + progress / speed, withTop + toBlock);
+        document.documentElement.scrollTo(0, r);
+
+        if (r != withTop + toBlock) {
+          requestAnimationFrame(step);
+        } else {
+          location.hash = hash;
+        }
+      }
+    });
+  }); //Pure js scrolling
+  // const element = document.documentElement,
+  //     body = document.body;
+  // const calcScroll = () => {
+  //    upElem.addEventListener('click', function (event) {
+  //         let scrollTop = Math.round(body.scrollTop || element.scrollTop);
+  //         if (this.hash !== '') {
+  //             event.preventDefault();
+  //             let hashElement = document.querySelector(this.hash),
+  //                 hashElementTop = 0;
+  //             while (hashElement.offsetParent) {
+  //                 hashElementTop += hashElement.offsetTop;
+  //                 hashElement = hashElement.offsetParent;
+  //             }
+  //             hashElementTop = Math.round(hashElementTop);
+  //             smoothScroll(scrollTop, hashElementTop, this.hash);
+  //         }
+  //     });
+  // };
+  // const smoothScroll = (from, to, hash) => {
+  //     let timeInterval = 1,
+  //         previousScrollTop,
+  //         speed;
+  //     if (to > from) {
+  //         speed = 30;
+  //     } else {
+  //         speed = -30
+  //     }
+  //     let move = setInterval(function () {
+  //         let scrollTop = Math.round(body.scrollTop || element.scrollTop);
+  //         if (
+  //             previousScrollTop === scrollTop ||
+  //             (to > from && scrollTop >= to) ||
+  //             (to < from && scrollTop <= to)
+  //         ) {
+  //             clearInterval(move);
+  //             history.replaceState(history.state, document.title, location.href.replace(/#.*$/g, '') + hash);
+  //         } else {
+  //             body.scrollTop += speed;
+  //             element.scrollTop += speed;
+  //             previousScrollTop = scrollTop;
+  //         }
+  //     },timeInterval);
+  // };
+  // calcScroll();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (scrolling);
+
+/***/ }),
+
+/***/ "./src/js/modules/showMoreStyles.js":
+/*!******************************************!*\
+  !*** ./src/js/modules/showMoreStyles.js ***!
+  \******************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _services_requests__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/requests */ "./src/js/services/requests.js");
+
+
+const showMoreStyles = (trigger, wrapper) => {
+  const btn = document.querySelector(trigger); // cards.forEach(card => {
+  //     card.classList.add('animated', 'fadeInUp');
+  // });
+  // btn.addEventListener('click', () => {
+  //     cards.forEach(card => {
+  //         card.classList.remove('hidden-lg', 'hidden-md','hidden-sm', 'hidden-xs');
+  //         card.classList.add('col-sm-3', 'col-sm-offset-0','col-xs-10','col-xs-offset-1');
+  //     });
+  //     btn.remove();
+  // });
+
+  btn.addEventListener('click', () => {
+    (0,_services_requests__WEBPACK_IMPORTED_MODULE_0__.getResource)('http://localhost:3000/styles').then(res => createCards(res)).catch(error => console.log(error));
+    btn.remove();
+  });
+
+  function createCards(response) {
+    response.forEach(_ref => {
+      let {
+        src,
+        title,
+        link
+      } = _ref;
+      let card = document.createElement('div');
+      card.classList.add('animated', 'fadeInUp', 'col-sm-3', 'col-sm-offset-0', 'col-xs-10', 'col-xs-offset-1');
+      card.innerHTML = `
+                <div class="styles-block">
+                    <img src=${src} alt="style">
+                    <h4>${title}</h4>
+                    <a href=${link}>Подробнее</a>
+                </div>
+            `;
+      document.querySelector(wrapper).appendChild(card);
+    });
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (showMoreStyles);
+
+/***/ }),
+
 /***/ "./src/js/modules/sliders.js":
 /*!***********************************!*\
   !*** ./src/js/modules/sliders.js ***!
@@ -363,6 +733,39 @@ const sliders = (slides, dir, prev, next) => {
 
 /* harmony default export */ __webpack_exports__["default"] = (sliders);
 
+/***/ }),
+
+/***/ "./src/js/services/requests.js":
+/*!*************************************!*\
+  !*** ./src/js/services/requests.js ***!
+  \*************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "getResource": function() { return /* binding */ getResource; },
+/* harmony export */   "postData": function() { return /* binding */ postData; }
+/* harmony export */ });
+const postData = async (url, data) => {
+  let res = await fetch(url, {
+    method: 'POST',
+    body: data
+  });
+  return await res.text();
+};
+
+const getResource = async url => {
+  let res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Could not fetch ${url}, status: ${res.status}`);
+  }
+
+  return await res.json();
+};
+
+
+
 /***/ })
 
 /******/ 	});
@@ -392,6 +795,23 @@ const sliders = (slides, dir, prev, next) => {
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	!function() {
 /******/ 		// define __esModule on exports
@@ -416,6 +836,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkTextInputs */ "./src/js/modules/checkTextInputs.js");
+/* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
+/* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+/* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
+/* harmony import */ var _modules_pictureSize__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/pictureSize */ "./src/js/modules/pictureSize.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+/* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+/* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+
+
+
+
+
+
+
 
 
 
@@ -431,6 +865,13 @@ window.addEventListener('DOMContentLoaded', () => {
   (0,_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])('[name="phone"]');
   (0,_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="name"]');
   (0,_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])('[name="message"]');
+  (0,_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])('.button-styles', '#styles .row');
+  (0,_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])('#size', '#material', '#options', '.promocode', '.calc-price');
+  (0,_modules_filter__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  (0,_modules_pictureSize__WEBPACK_IMPORTED_MODULE_8__["default"])('.sizes-block');
+  (0,_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])('.accordion-heading');
+  (0,_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])('.burger-menu', '.burger');
+  (0,_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])('.pageup');
 });
 }();
 /******/ })()
